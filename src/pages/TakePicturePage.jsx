@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import html2canvas from "html2canvas";
+import { saveAs } from "file-saver";
 import { Link } from "react-router-dom";
 
 function TakePicturePage({ selectedFrameSrc }) {
@@ -29,6 +31,7 @@ function TakePicturePage({ selectedFrameSrc }) {
 
   const width = 600;
   const height = width / (4 / 3);
+
   const takePicture1 = () => {
     let photo = photoRef1.current;
     let video = videoRef.current;
@@ -91,16 +94,27 @@ function TakePicturePage({ selectedFrameSrc }) {
     ctx.clearRect(0, 0, photo.width, photo.height);
   };
 
-  //카메라 권한 가져오기
+  // 카메라 권한 가져오기
   useEffect(() => {
     getUserCamera();
   }, [videoRef]);
+
+  const captureAndSaveImage = () => {
+    const captureDiv = document.getElementById("capture-div");
+    html2canvas(captureDiv).then((canvas) => {
+      // Convert the canvas to a data URL and save it as a PNG file
+      canvas.toBlob((blob) => {
+        saveAs(blob, "capturedImage.png");
+      });
+    });
+  };
 
   return (
     <div className="flex h-screen w-screen">
       <video
         className="container m-0 -scale-x-100 p-8 pb-10"
         ref={videoRef}
+        style={{ transform: "scaleX(-1)" }}
       ></video>
 
       <div className="flex h-[90vh] w-90 m-0 pt-14 justify-start">
@@ -158,31 +172,43 @@ function TakePicturePage({ selectedFrameSrc }) {
           >
             Clear <br></br>Selfie <br></br>4
           </button>
-          <button className="btn btn-dark container btn-lg p-4">완료</button>
+          <button
+            onClick={captureAndSaveImage}
+            className="btn btn-dark container btn-lg p-4"
+          >
+            완료
+          </button>
         </div>
       </div>
+      <div
+        className="flex fixed right-[30px] top-[9px] w-[306px] h-[910px]"
+        id="capture-div"
+      >
+        <div className="flex fixed top-6 right-[40px] flex-col gap-1 ">
+          <canvas
+            ref={photoRef1}
+            className="w-[290px] h-[185px] -scale-x-100"
+          ></canvas>
+          <canvas
+            ref={photoRef2}
+            className="w-[290px] h-[185px] -scale-x-100"
+          ></canvas>
+          <canvas
+            ref={photoRef3}
+            className="w-[290px] h-[185px] -scale-x-100"
+          ></canvas>
+          <canvas
+            ref={photoRef4}
+            className="w-[290px] h-[185px] -scale-x-100"
+          ></canvas>
+        </div>
 
-      <div className="flex fixed top-[-10px] right-2 flex-col gap-1 m-6">
-        <canvas
-          ref={photoRef1}
-          className="w-[290px] h-[185px] -scale-x-100"
-        ></canvas>
-        <canvas
-          ref={photoRef2}
-          className="w-[290px] h-[185px] -scale-x-100"
-        ></canvas>
-        <canvas
-          ref={photoRef3}
-          className="w-[290px] h-[185px] -scale-x-100"
-        ></canvas>
-        <canvas
-          ref={photoRef4}
-          className="w-[290px] h-[185px] -scale-x-100"
-        ></canvas>
-      </div>
-
-      <div className="z-10 fixed top-[-20px] right-[-70px]">
-        <img src={selectedFrameSrc} className="object-contain h-[1000px]"></img>
+        <div className="z-10 fixed top-[-20px] right-[-70px]">
+          <img
+            src={selectedFrameSrc}
+            className="object-contain h-[1000px]"
+          ></img>
+        </div>
       </div>
     </div>
   );
