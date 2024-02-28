@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import FrameSelectionPage from "./pages/FrameSelectionPage";
+import TakePicturePage from "./pages/TakePicturePage";
 
 function App() {
+  const [selectedFrameSrc, setSelectedFrameSrc] =
+    useState("/frames/문상훈.png");
+  const [selectedFrameName, setSelectedFrameName] = useState("문상훈 프레임");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <FrameSelectionPage
+              setSelectedFrameSrc={setSelectedFrameSrc}
+              selectedFrameName={selectedFrameName}
+              setSelectedFrameName={setSelectedFrameName}
+            />
+          }
+        />
+        <Route
+          path="/take-picture"
+          element={<TakePicturePage selectedFrameSrc={selectedFrameSrc} />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
