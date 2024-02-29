@@ -9,6 +9,7 @@ function App() {
   const [selectedFrameSrc, setSelectedFrameSrc] =
     useState("/frames/문상훈.png");
   const [selectedFrameName, setSelectedFrameName] = useState("문상훈 프레임");
+  const [studentID, setStudentID] = useState("");
 
   return (
     <Router>
@@ -17,6 +18,8 @@ function App() {
           path="/"
           element={
             <FrameSelectionPage
+              studentID={studentID}
+              setStudentID={setStudentID}
               setSelectedFrameSrc={setSelectedFrameSrc}
               selectedFrameName={selectedFrameName}
               setSelectedFrameName={setSelectedFrameName}
@@ -25,7 +28,12 @@ function App() {
         />
         <Route
           path="/take-picture"
-          element={<TakePicturePage selectedFrameSrc={selectedFrameSrc} />}
+          element={
+            <TakePicturePage
+              studentID={studentID}
+              selectedFrameSrc={selectedFrameSrc}
+            />
+          }
         />
       </Routes>
     </Router>

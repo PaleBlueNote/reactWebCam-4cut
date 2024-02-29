@@ -4,7 +4,7 @@ import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import { Link } from "react-router-dom";
 
-function TakePicturePage({ selectedFrameSrc }) {
+function TakePicturePage({ studentID, selectedFrameSrc }) {
   let videoRef = useRef(null);
   let photoRef1 = useRef(null);
   let photoRef2 = useRef(null);
@@ -104,15 +104,15 @@ function TakePicturePage({ selectedFrameSrc }) {
     html2canvas(captureDiv).then((canvas) => {
       // Convert the canvas to a data URL and save it as a PNG file
       canvas.toBlob((blob) => {
-        saveAs(blob, "capturedImage.png");
+        saveAs(blob, `${studentID}.png`);
       });
     });
   };
 
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex w-screen h-screen">
       <video
-        className="container m-0 -scale-x-100 p-8 pb-10"
+        className="container p-8 pb-10 m-0 -scale-x-100"
         ref={videoRef}
         style={{ transform: "scaleX(-1)" }}
       ></video>
@@ -121,60 +121,60 @@ function TakePicturePage({ selectedFrameSrc }) {
         <div className="flex flex-col h-full gap-[80px]">
           <button
             onClick={takePicture1}
-            className="btn btn-primary container btn-lg"
+            className="container btn btn-primary btn-lg"
           >
             Take <br></br>Selfie<br></br> 1
           </button>
           <button
             onClick={takePicture2}
-            className="btn btn-primary container btn-lg"
+            className="container btn btn-primary btn-lg"
           >
             Take <br></br>Selfie<br></br> 2
           </button>
           <button
             onClick={takePicture3}
-            className="btn btn-primary container btn-lg"
+            className="container btn btn-primary btn-lg"
           >
             Take <br></br>Selfie<br></br> 3
           </button>
           <button
             onClick={takePicture4}
-            className="btn btn-primary container btn-lg"
+            className="container btn btn-primary btn-lg"
           >
             Take <br></br>Selfie<br></br> 4
           </button>
-          <Link to="/" className="btn btn-light container btn-lg p-4">
+          <Link to="/" className="container p-4 btn btn-light btn-lg">
             이전
           </Link>
         </div>
         <div className="flex flex-col h-full gap-[80px] ml-8">
           <button
             onClick={clearImage1}
-            className="btn btn-danger container btn-lg"
+            className="container btn btn-danger btn-lg"
           >
             Clear <br></br>Selfie <br></br>1
           </button>
           <button
             onClick={clearImage2}
-            className="btn btn-danger container btn-lg"
+            className="container btn btn-danger btn-lg"
           >
             Clear <br></br>Selfie<br></br> 2
           </button>
           <button
             onClick={clearImage3}
-            className="btn btn-danger container btn-lg"
+            className="container btn btn-danger btn-lg"
           >
             Clear <br></br>Selfie<br></br> 3
           </button>
           <button
             onClick={clearImage4}
-            className="btn btn-danger container btn-lg"
+            className="container btn btn-danger btn-lg"
           >
             Clear <br></br>Selfie <br></br>4
           </button>
           <button
             onClick={captureAndSaveImage}
-            className="btn btn-dark container btn-lg p-4"
+            className="container p-4 btn btn-dark btn-lg"
           >
             완료
           </button>
