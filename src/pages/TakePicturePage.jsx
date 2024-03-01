@@ -1,12 +1,27 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import html2canvas from "html2canvas";
-import { saveAs } from "file-saver";
 import { Link } from "react-router-dom";
+import { Modal } from "react-bootstrap";
+import QRCode from "qrcode.react";
+import { useNavigate } from "react-router-dom";
+import AWS from "aws-sdk";
+
+AWS.config.update({
+  accessKeyId: process.env.REACT_APP_ACCESS_ID,
+  secretAccessKey: process.env.REACT_APP_ACCESS_KEY,
+  region: process.env.REACT_APP_REGION,
+});
+
+const s3 = new AWS.S3();
 
 function TakePicturePage({ studentID, selectedFrameSrc }) {
   const videoRef = useRef(null);
   const photoRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const [s3URL, setS3URL] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => setShowModal(false);
+  let navigate = useNavigate();
 
   useEffect(() => {
     getUserCamera();
@@ -52,9 +67,33 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
     const captureDiv = document.getElementById("capture-div");
     html2canvas(captureDiv).then((canvas) => {
       canvas.toBlob((blob) => {
-        saveAs(blob, `${studentID}.png`);
+        uploadToS3(blob);
       });
     });
+    setShowModal(true);
+  };
+
+  const uploadToS3 = (blob) => {
+    const params = {
+      Bucket: "doit4cutbucket", // Replace with your S3 bucket name
+      Key: `${studentID}.png`,
+      Body: blob,
+      ContentType: "image/png", // Adjust the content type based on your file type
+    };
+
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Image uploaded to S3:", data.Location);
+
+        setS3URL(data.Location);
+      }
+    });
+  };
+
+  const handleSuccess = () => {
+    navigate("/");
   };
 
   return (
@@ -123,6 +162,25 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
           ></img>
         </div>
       </div>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>이미지 다운로드 QR</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="flex flex-col items-center justify-center">
+          <QRCode value={s3URL} size={256} />
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="flex items-center justify-center w-full">
+            <button
+              onClick={handleSuccess}
+              className="w-full ml-4 btn btn-success btn-lg d-flex align-items-center justify-content-center"
+            >
+              처음으로
+            </button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
