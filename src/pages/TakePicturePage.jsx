@@ -29,8 +29,8 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
       });
   };
 
-  const width = 600;
-  const height = width / (4 / 3);
+  const width = 1200;
+  const height = width / 1.56;
 
   const takePicture1 = () => {
     let photo = photoRef1.current;
@@ -184,22 +184,22 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
         className="flex fixed right-[30px] top-[9px] w-[306px] h-[910px]"
         id="capture-div"
       >
-        <div className="flex fixed top-6 right-[40px] flex-col gap-1 ">
+        <div className="flex fixed top-6 right-[48px] flex-col">
           <canvas
             ref={photoRef1}
-            className="w-[290px] h-[185px] -scale-x-100"
+            className="w-[272px] h-[188px] -scale-x-100"
           ></canvas>
           <canvas
             ref={photoRef2}
-            className="w-[290px] h-[185px] -scale-x-100"
+            className="w-[272px] h-[188px] -scale-x-100"
           ></canvas>
           <canvas
             ref={photoRef3}
-            className="w-[290px] h-[185px] -scale-x-100"
+            className="w-[272px] h-[188px] -scale-x-100"
           ></canvas>
           <canvas
             ref={photoRef4}
-            className="w-[290px] h-[185px] -scale-x-100"
+            className="w-[272px] h-[188px] -scale-x-100"
           ></canvas>
         </div>
 
