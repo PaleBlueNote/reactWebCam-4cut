@@ -1,8 +1,8 @@
 // FrameSelectionPage.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Frame from "../components/Frame";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function FrameSelectionPage({
@@ -21,20 +21,56 @@ function FrameSelectionPage({
     { image: "/frames/카리나.png", title: "카리나 프레임" },
   ];
   const [showModal, setShowModal] = useState(false);
-
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  let navigate = useNavigate();
+
   const handleSelect = (frame) => {
     setSelectedFrameSrc(frame.image);
     setSelectedFrameName(frame.title);
   };
 
-  const handleIDChange = () => {
+  const handleTakePicture = () => {
     const inputElement = document.getElementById("studentID");
     if (inputElement) {
-      setStudentID(inputElement.value);
+      const inputValue = inputElement.value;
+      const isValidID = /^\d{9}$/.test(inputValue);
+
+      if (isValidID) {
+        setStudentID(inputValue);
+        navigate("/take-picture");
+      } else {
+        alert("학번 9자리를 제대로 입력해주세요.");
+      }
     }
   };
+
+  const handleEnterKey = (event) => {
+    if (event.key === "Enter") {
+      if (showModal) {
+        handleTakePicture();
+      } else {
+        handleShowModal();
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleEnterKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleEnterKey);
+    };
+  }, [showModal]);
+
+  useEffect(() => {
+    if (showModal) {
+      const inputElement = document.getElementById("studentID");
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }
+  }, [showModal]);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -75,13 +111,12 @@ function FrameSelectionPage({
         </Modal.Body>
         <Modal.Footer>
           <div className="flex items-center justify-center w-full">
-            <Link
-              to="/take-picture"
-              onClick={handleIDChange}
+            <button
+              onClick={handleTakePicture}
               className="w-full ml-4 btn btn-success btn-lg d-flex align-items-center justify-content-center"
             >
               사진 찍기
-            </Link>
+            </button>
           </div>
         </Modal.Footer>
       </Modal>
