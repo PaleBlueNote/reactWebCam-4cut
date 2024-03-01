@@ -18,7 +18,6 @@ function App() {
           path="/"
           element={
             <FrameSelectionPage
-              studentID={studentID}
               setStudentID={setStudentID}
               setSelectedFrameSrc={setSelectedFrameSrc}
               selectedFrameName={selectedFrameName}
