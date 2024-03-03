@@ -2,22 +2,34 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import FrameSelectionPage from "./pages/FrameSelectionPage";
-import TakePicturePage from "./pages/TakePicturePage";
+
+import LandingPage from "./pages/LandingPage";
+
+import CelebrityFrameSelectionPage from "./pages/Celebrity/CelebrityFrameSelectionPage";
+import CelebrityTakePicturePage from "./pages/Celebrity/CelebrityTakePicturePage";
+
+import CheetoFrameSelectionPage from "./pages/Cheeto/CheetoFrameSelectionPage";
+import CheetoTakePicturePage from "./pages/Cheeto/CheetoTakePicturePage";
+
+import DOITBasicFrameSelectionPage from "./pages/DOITBasic/DOITBasicFrameSelectionPage";
+import DOITBasicTakePicturePage from "./pages/DOITBasic/DOITBasicTakePicturePage";
+
+import DOITTextFrameSelectionPage from "./pages/DOITText/DOITTextFrameSelectionPage";
+import DOITTextTakePicturePage from "./pages/DOITText/DOITTextTakePicturePage";
 
 function App() {
-  const [selectedFrameSrc, setSelectedFrameSrc] =
-    useState("/frames/문상훈.png");
-  const [selectedFrameName, setSelectedFrameName] = useState("문상훈 프레임");
+  const [selectedFrameSrc, setSelectedFrameSrc] = useState("");
+  const [selectedFrameName, setSelectedFrameName] = useState("");
   const [studentID, setStudentID] = useState("");
 
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route
-          path="/"
+          path="/CelebrityFrame"
           element={
-            <FrameSelectionPage
+            <CelebrityFrameSelectionPage
               setStudentID={setStudentID}
               setSelectedFrameSrc={setSelectedFrameSrc}
               selectedFrameName={selectedFrameName}
@@ -26,9 +38,69 @@ function App() {
           }
         />
         <Route
-          path="/take-picture"
+          path="/CelebrityPicture"
           element={
-            <TakePicturePage
+            <CelebrityTakePicturePage
+              studentID={studentID}
+              selectedFrameSrc={selectedFrameSrc}
+            />
+          }
+        />
+        <Route
+          path="/CheetoFrame"
+          element={
+            <CheetoFrameSelectionPage
+              setStudentID={setStudentID}
+              setSelectedFrameSrc={setSelectedFrameSrc}
+              selectedFrameName={selectedFrameName}
+              setSelectedFrameName={setSelectedFrameName}
+            />
+          }
+        />
+        <Route
+          path="/CheetoPicture"
+          element={
+            <CheetoTakePicturePage
+              studentID={studentID}
+              selectedFrameSrc={selectedFrameSrc}
+            />
+          }
+        />
+        <Route
+          path="/DOITBaicFrame"
+          element={
+            <DOITBasicFrameSelectionPage
+              setStudentID={setStudentID}
+              setSelectedFrameSrc={setSelectedFrameSrc}
+              selectedFrameName={selectedFrameName}
+              setSelectedFrameName={setSelectedFrameName}
+            />
+          }
+        />
+        <Route
+          path="/DOITBasicPicture"
+          element={
+            <DOITBasicTakePicturePage
+              studentID={studentID}
+              selectedFrameSrc={selectedFrameSrc}
+            />
+          }
+        />
+        <Route
+          path="/DOITTextFrame"
+          element={
+            <DOITTextFrameSelectionPage
+              setStudentID={setStudentID}
+              setSelectedFrameSrc={setSelectedFrameSrc}
+              selectedFrameName={selectedFrameName}
+              setSelectedFrameName={setSelectedFrameName}
+            />
+          }
+        />
+        <Route
+          path="/DOITTextPicture"
+          element={
+            <DOITTextTakePicturePage
               studentID={studentID}
               selectedFrameSrc={selectedFrameSrc}
             />

@@ -15,7 +15,7 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-function TakePicturePage({ studentID, selectedFrameSrc }) {
+function DOITBasicTakePicturePage({ studentID, selectedFrameSrc }) {
   const videoRef = useRef(null);
   const photoRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [s3URL, setS3URL] = useState("");
@@ -85,7 +85,7 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
       if (err) {
         console.error(err);
       } else {
-        console.log("Image uploaded to S3:", data.Location);
+        console.log("Image uploaded success");
 
         setS3URL(data.Location);
       }
@@ -185,4 +185,4 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
   );
 }
 
-export default TakePicturePage;
+export default DOITBasicTakePicturePage;

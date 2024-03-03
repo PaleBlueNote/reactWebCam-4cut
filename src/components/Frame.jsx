@@ -14,28 +14,28 @@ function Frame(props) {
   };
 
   return (
-    <div className="card w-18 ">
-      <div className="w-full flex items-center justify-center">
+    <div className="card">
+      <div className="flex items-center justify-center w-full">
         <img
           src={props.image}
-          className="card-img-top ml-10"
+          className="ml-10 card-img-top"
           alt={props.title}
         ></img>
       </div>
-      <div className="card-body flex flex-col items-center justify-center">
-        <h5 className="card-title font-extrabold text-2xl">{props.title}</h5>
+      <div className="flex flex-col items-center justify-center card-body">
+        <h5 className="text-2xl font-extrabold card-title">{props.title}</h5>
         <div className="flex">
           <button
             onClick={handleSelect}
             className="btn btn-primary d-flex align-items-center justify-content-center"
           >
-            <p className="text-xs m-0">프레임 선택</p>
+            <p className="m-0 text-xs">프레임 선택</p>
           </button>
           <button
             onClick={handleShowModal}
             className="btn btn-light d-flex align-items-center justify-content-center"
           >
-            <p className="text-xs m-0">자세히보기</p>
+            <p className="m-0 text-xs">자세히보기</p>
           </button>
         </div>
 
@@ -46,7 +46,7 @@ function Frame(props) {
           <Modal.Body className="flex flex-col items-center justify-center">
             <img
               src={props.image}
-              className="w-auto h-auto ml-10"
+              className="w-auto h-auto"
               alt={props.title}
             ></img>
             <p className="text-3xl font-extrabold">{props.title}</p>

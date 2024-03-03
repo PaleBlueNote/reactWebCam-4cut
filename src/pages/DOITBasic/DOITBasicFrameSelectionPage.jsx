@@ -1,12 +1,11 @@
-// FrameSelectionPage.jsx
+// DoiTFrameSelectionPage.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Frame from "../components/Frame";
+import Frame from "../../components/Frame";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function FrameSelectionPage({
-  studentID,
+function DOITBasicFrameSelectionPage({
   setStudentID,
   setSelectedFrameSrc,
   selectedFrameName,
@@ -124,4 +123,4 @@ function FrameSelectionPage({
   );
 }
 
-export default FrameSelectionPage;
+export default DOITBasicFrameSelectionPage;
