@@ -37,7 +37,7 @@ function CelebrityFrameSelectionPage({
 
       if (isValidID) {
         setStudentID(inputValue);
-        navigate("/take-picture");
+        navigate("/hidden-take-picture");
       } else {
         alert("학번 9자리를 제대로 입력해주세요.");
       }

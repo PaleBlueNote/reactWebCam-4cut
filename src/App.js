@@ -10,6 +10,7 @@ import CelebrityFrameSelectionPage from "./pages/Celebrity/CelebrityFrameSelecti
 import CheetoFrameSelectionPage from "./pages/Cheeto/CheetoFrameSelectionPage";
 import DOITBasicFrameSelectionPage from "./pages/DOITBasic/DOITBasicFrameSelectionPage";
 import DOITTextFrameSelectionPage from "./pages/DOITText/DOITTextFrameSelectionPage";
+import HiddenTakePicturePage from "./pages/HiddenTakePicturePage";
 
 function App() {
   const [selectedFrameSrc, setSelectedFrameSrc] = useState("");
@@ -68,6 +69,15 @@ function App() {
           path="/take-picture"
           element={
             <TakePicturePage
+              studentID={studentID}
+              selectedFrameSrc={selectedFrameSrc}
+            />
+          }
+        />
+        <Route
+          path="/hidden-take-picture"
+          element={
+            <HiddenTakePicturePage
               studentID={studentID}
               selectedFrameSrc={selectedFrameSrc}
             />

@@ -15,7 +15,7 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-function TakePicturePage({ studentID, selectedFrameSrc }) {
+function HiddenTakePicturePage({ studentID, selectedFrameSrc }) {
   const videoRef = useRef(null);
   const photoRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [s3URL, setS3URL] = useState("");
@@ -78,14 +78,14 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
       Bucket: "doit4cutbucket", // Replace with your S3 bucket name
       Key: `${studentID}.png`,
       Body: blob,
-      ContentType: "image/png", // Adjust the content type based on your file type
+      ContentType: "image/png",
     };
 
     s3.upload(params, (err, data) => {
       if (err) {
         console.error(err);
       } else {
-        console.log("Image uploaded success");
+        console.log("Image uploaded to S3:", data.Location);
 
         setS3URL(data.Location);
       }
@@ -141,20 +141,20 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
       </div>
 
       <div
-        className="flex fixed right-[20px] top-[44px] w-[330px] h-[992px]"
+        className="flex fixed right-[30px] top-[9px] w-[306px] h-[910px]"
         id="capture-div"
       >
-        <div className="flex fixed top-[50px] right-[36px] flex-col gap-2">
+        <div className="flex fixed top-6 right-[48px] flex-col">
           {photoRefs.map((photoRef, index) => (
             <canvas
               key={index}
               ref={photoRef}
-              className="w-[300px] h-[200px] -scale-x-100"
+              className="w-[272px] h-[188px] -scale-x-100"
             ></canvas>
           ))}
         </div>
 
-        <div className="z-10 fixed top-[40px] right-[20px]">
+        <div className="z-10 fixed top-[-20px] right-[-70px]">
           <img
             src={selectedFrameSrc}
             className="object-contain h-[1000px]"
@@ -185,4 +185,4 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
   );
 }
 
-export default TakePicturePage;
+export default HiddenTakePicturePage;
