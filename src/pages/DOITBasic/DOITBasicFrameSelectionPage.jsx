@@ -12,12 +12,10 @@ function DOITBasicFrameSelectionPage({
   setSelectedFrameName,
 }) {
   const frames = [
-    { image: "/frames/문상훈.png", title: "문상훈 프레임" },
-    { image: "/frames/차은우.png", title: "차은우 프레임" },
-    { image: "/frames/앤톤.png", title: "앤톤 프레임" },
-    { image: "/frames/윈터.png", title: "윈터 프레임" },
-    { image: "/frames/김채원.png", title: "김채원 프레임" },
-    { image: "/frames/카리나.png", title: "카리나 프레임" },
+    { image: "/frames/DOITBasicFrame/검정.png", title: "검정 기본 프레임" },
+    { image: "/frames/DOITBasicFrame/노랑.png", title: "노랑 기본 프레임" },
+    { image: "/frames/DOITBasicFrame/분홍.png", title: "분홍 기본 프레임" },
+    { image: "/frames/DOITBasicFrame/회색.png", title: "회색 기본 프레임" },
   ];
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);

@@ -15,10 +15,10 @@ function Frame(props) {
 
   return (
     <div className="card">
-      <div className="flex items-center justify-center w-full">
+      <div className="flex items-center justify-center h-[900px]">
         <img
           src={props.image}
-          className="ml-10 card-img-top"
+          className="m-4 ml-10 card-img-top h-[900px]"
           alt={props.title}
         ></img>
       </div>

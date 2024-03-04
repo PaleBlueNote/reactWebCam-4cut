@@ -34,7 +34,7 @@ function CheetoFrameSelectionPage({
 
       if (isValidID) {
         setStudentID(inputValue);
-        navigate("/CheetoPicture");
+        navigate("/take-picture");
       } else {
         alert("학번 9자리를 제대로 입력해주세요.");
       }

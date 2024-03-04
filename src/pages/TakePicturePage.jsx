@@ -6,6 +6,7 @@ import { Modal } from "react-bootstrap";
 import QRCode from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import AWS from "aws-sdk";
+import { saveAs } from "file-saver";
 
 AWS.config.update({
   accessKeyId: process.env.REACT_APP_ACCESS_ID,
@@ -15,7 +16,7 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-function DOITBasicTakePicturePage({ studentID, selectedFrameSrc }) {
+function TakePicturePage({ studentID, selectedFrameSrc }) {
   const videoRef = useRef(null);
   const photoRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [s3URL, setS3URL] = useState("");
@@ -68,6 +69,7 @@ function DOITBasicTakePicturePage({ studentID, selectedFrameSrc }) {
     html2canvas(captureDiv).then((canvas) => {
       canvas.toBlob((blob) => {
         uploadToS3(blob);
+        saveAs(blob, "capturedImage.png");
       });
     });
     setShowModal(true);
@@ -141,20 +143,20 @@ function DOITBasicTakePicturePage({ studentID, selectedFrameSrc }) {
       </div>
 
       <div
-        className="flex fixed right-[30px] top-[9px] w-[306px] h-[910px]"
+        className="flex fixed right-[20px] top-[44px] w-[330px] h-[984px]"
         id="capture-div"
       >
-        <div className="flex fixed top-6 right-[48px] flex-col">
+        <div className="flex fixed top-[50px] right-[36px] flex-col gap-2">
           {photoRefs.map((photoRef, index) => (
             <canvas
               key={index}
               ref={photoRef}
-              className="w-[272px] h-[188px] -scale-x-100"
+              className="w-[300px] h-[200px] -scale-x-100"
             ></canvas>
           ))}
         </div>
 
-        <div className="z-10 fixed top-[-20px] right-[-70px]">
+        <div className="z-10 fixed top-[40px] right-[20px]">
           <img
             src={selectedFrameSrc}
             className="object-contain h-[1000px]"
@@ -185,4 +187,4 @@ function DOITBasicTakePicturePage({ studentID, selectedFrameSrc }) {
   );
 }
 
-export default DOITBasicTakePicturePage;
+export default TakePicturePage;

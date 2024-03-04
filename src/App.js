@@ -4,18 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
+import TakePicturePage from "./pages/TakePicturePage";
 
 import CelebrityFrameSelectionPage from "./pages/Celebrity/CelebrityFrameSelectionPage";
-import CelebrityTakePicturePage from "./pages/Celebrity/CelebrityTakePicturePage";
-
 import CheetoFrameSelectionPage from "./pages/Cheeto/CheetoFrameSelectionPage";
-import CheetoTakePicturePage from "./pages/Cheeto/CheetoTakePicturePage";
-
 import DOITBasicFrameSelectionPage from "./pages/DOITBasic/DOITBasicFrameSelectionPage";
-import DOITBasicTakePicturePage from "./pages/DOITBasic/DOITBasicTakePicturePage";
-
 import DOITTextFrameSelectionPage from "./pages/DOITText/DOITTextFrameSelectionPage";
-import DOITTextTakePicturePage from "./pages/DOITText/DOITTextTakePicturePage";
 
 function App() {
   const [selectedFrameSrc, setSelectedFrameSrc] = useState("");
@@ -38,15 +32,6 @@ function App() {
           }
         />
         <Route
-          path="/CelebrityPicture"
-          element={
-            <CelebrityTakePicturePage
-              studentID={studentID}
-              selectedFrameSrc={selectedFrameSrc}
-            />
-          }
-        />
-        <Route
           path="/CheetoFrame"
           element={
             <CheetoFrameSelectionPage
@@ -54,15 +39,6 @@ function App() {
               setSelectedFrameSrc={setSelectedFrameSrc}
               selectedFrameName={selectedFrameName}
               setSelectedFrameName={setSelectedFrameName}
-            />
-          }
-        />
-        <Route
-          path="/CheetoPicture"
-          element={
-            <CheetoTakePicturePage
-              studentID={studentID}
-              selectedFrameSrc={selectedFrameSrc}
             />
           }
         />
@@ -78,15 +54,6 @@ function App() {
           }
         />
         <Route
-          path="/DOITBasicPicture"
-          element={
-            <DOITBasicTakePicturePage
-              studentID={studentID}
-              selectedFrameSrc={selectedFrameSrc}
-            />
-          }
-        />
-        <Route
           path="/DOITTextFrame"
           element={
             <DOITTextFrameSelectionPage
@@ -98,9 +65,9 @@ function App() {
           }
         />
         <Route
-          path="/DOITTextPicture"
+          path="/take-picture"
           element={
-            <DOITTextTakePicturePage
+            <TakePicturePage
               studentID={studentID}
               selectedFrameSrc={selectedFrameSrc}
             />
