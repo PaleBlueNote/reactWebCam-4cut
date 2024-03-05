@@ -32,8 +32,10 @@ function CelebrityFrameSelectionPage({
   const handleTakePicture = () => {
     const inputElement = document.getElementById("studentID");
     if (inputElement) {
-      const inputValue = inputElement.value;
-      const isValidID = /^\d{9}$/.test(inputValue);
+      // const inputValue = inputElement.value;
+      // const isValidID = /^\d{9}$/.test(inputValue);
+      const inputValue = "0305";
+      const isValidID = true;
 
       if (isValidID) {
         setStudentID(inputValue);
