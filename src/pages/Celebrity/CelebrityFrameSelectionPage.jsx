@@ -74,7 +74,7 @@ function CelebrityFrameSelectionPage({
   }, [showModal]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center !font-pretendard">
       <div className="flex items-center justify-center gap-4">
         {frames.map((frame, index) => (
           <Frame

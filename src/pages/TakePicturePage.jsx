@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import {Modal, Spinner} from "react-bootstrap";
 import QRCode from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import AWS from "aws-sdk";
@@ -57,12 +57,6 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
     ctx.drawImage(video, 0, 0, photo.width, photo.height);
   };
 
-  const clearImage = (index) => {
-    const photo = photoRefs[index].current;
-    const ctx = photo.getContext("2d");
-    ctx.clearRect(0, 0, photo.width, photo.height);
-  };
-
   const captureAndSaveImage = () => {
     const captureDiv = document.getElementById("capture-div");
     html2canvas(captureDiv).then((canvas) => {
@@ -97,78 +91,83 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
   };
 
   return (
-    <div className="flex w-screen h-screen">
-      <video
-        className="container p-8 pb-10 m-0 -scale-x-100"
-        ref={videoRef}
-        style={{ transform: "scaleX(-1)" }}
-      ></video>
-
-      <div className="flex h-[90vh] w-90 m-0 pt-14 justify-start">
-        <div className="flex flex-col h-full gap-[80px] px-3">
-          {Array.from({ length: 4 }, (_, index) => (
-            <div key={index} className="flex gap-2">
-              <button
-                onClick={() => takePicture(index)}
-                className="container btn btn-primary btn-lg"
-              >
-                Take <br />
-                Selfie
-                <br /> {index + 1}
-              </button>
-              <button
-                onClick={() => clearImage(index)}
-                className="container btn btn-danger btn-lg"
-              >
-                Clear <br />
-                Selfie
-                <br /> {index + 1}
-              </button>
-            </div>
-          ))}
-          <div className="flex gap-2">
-            <Link to="/" className="container p-4 btn btn-light btn-lg">
-              이전
-            </Link>
-            <button
+    <div className="flex w-screen h-screen overflow-scroll !font-pretendard">
+      <div className="w-[60%]">
+        <video
+            className="w-full"
+            ref={videoRef}
+            style={{ transform: "scaleX(-1)" }}
+        ></video>
+        <div className="flex gap-4 p-3.5">
+          <button
+              onClick={() => takePicture(0)}
+              className="container btn btn-primary btn-lg"
+          >
+1번 사진찍기
+          </button>
+          <button
+              onClick={() => takePicture(1)}
+              className="container btn btn-primary btn-lg"
+          >
+            2번 사진찍기
+          </button>
+          <button
+              onClick={() => takePicture(2)}
+              className="container btn btn-primary btn-lg"
+          >
+            3번 사진찍기
+          </button>
+          <button
+              onClick={() => takePicture(3)}
+              className="container text-md btn btn-primary btn-lg"
+          >
+            4번 사진찍기
+          </button>
+        </div>
+        <div className="flex gap-2 p-3.5">
+          <Link to="/" className="container p-4 btn btn-light btn-lg border-gray-500 border-2">
+            이전
+          </Link>
+          <button
               onClick={captureAndSaveImage}
               className="container p-4 btn btn-dark btn-lg"
-            >
-              완료
-            </button>
-          </div>
+          >
+            완료
+          </button>
         </div>
       </div>
-
-      <div
-        className="flex fixed right-[20px] top-[44px] w-[330px] h-[992px]"
-        id="capture-div"
-      >
-        <div className="flex fixed top-[50px] right-[36px] flex-col gap-2">
-          {photoRefs.map((photoRef, index) => (
-            <canvas
-              key={index}
-              ref={photoRef}
-              className="w-[300px] h-[200px] -scale-x-100"
-            ></canvas>
-          ))}
+        <div className="flex w-[40%] max-h-full">
+            <div className="flex fixed right-0 w-auto h-full aspect-[218.828/654] justify-end" id="capture-div">
+                {/*캔버스*/}
+                <div className="fixed right-0 top-0 h-full w-auto aspect-[218.828/654] flex-col flex">
+                    {photoRefs.map((photoRef, index) => (
+                        <canvas
+                            key={index}
+                            ref={photoRef}
+                            className="w-full h-[21.14%] -scale-x-100"
+                        ></canvas>
+                    ))}
+                </div>
+                {/*프레임*/}
+                <img
+                    src={selectedFrameSrc}
+                    className="z-10 fixed right-0 top-0 h-full"
+                    alt="Selected Frame"
+                ></img>
+            </div>
         </div>
 
-        <div className="z-10 fixed top-[40px] right-[20px]">
-          <img
-            src={selectedFrameSrc}
-            className="object-contain h-[1000px]"
-            alt="Selected Frame"
-          ></img>
-        </div>
-      </div>
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>이미지 다운로드 QR</Modal.Title>
         </Modal.Header>
         <Modal.Body className="flex flex-col items-center justify-center">
-          <QRCode value={s3URL} size={256} />
+            {s3URL ? (
+                <QRCode value={s3URL} size={256} />
+            ) : (
+                <Spinner size="w-16 h-16" color="border-blue-500" />
+            )}
         </Modal.Body>
         <Modal.Footer>
           <div className="flex items-center justify-center w-full">

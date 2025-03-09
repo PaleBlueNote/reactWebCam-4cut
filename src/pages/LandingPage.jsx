@@ -20,7 +20,7 @@ function LandingPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen gap-6">
-      <h1 className="font-extrabold">프레임 테마 선택</h1>
+      <h1 className="font-pretendard">프레임 테마 선택</h1>
       <div className="flex w-1/2 gap-4 h-3/4">
         <div
           onClick={handleDOITBasicClick}
@@ -31,7 +31,7 @@ function LandingPage() {
             alt="검정.png"
             className="h-5/6"
           ></img>
-          <button className="w-full mt-4 h-1/6 btn btn-dark btn-lg">
+          <button className="w-full mt-4 h-1/6 btn btn-dark btn-lg !font-pretendard">
             두잇 기본 프레임
           </button>
         </div>
@@ -44,7 +44,7 @@ function LandingPage() {
             className="h-5/6"
             alt="검정_두잇.png"
           ></img>
-          <button className="w-full mt-4 h-1/6 btn btn-secondary btn-lg">
+          <button className="w-full mt-4 h-1/6 btn btn-secondary btn-lg !font-pretendard">
             두잇 글자 프레임
           </button>
         </div>
@@ -57,7 +57,7 @@ function LandingPage() {
             alt="치토2.png"
             className="h-5/6"
           ></img>
-          <button className="w-full mt-4 h-1/6 btn btn-primary btn-lg">
+          <button className="w-full mt-4 h-1/6 btn btn-primary btn-lg !font-pretendard">
             치토 프레임
           </button>
         </div>
