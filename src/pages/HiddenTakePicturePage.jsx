@@ -22,6 +22,7 @@ function HiddenTakePicturePage({ studentID, selectedFrameSrc }) {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   let navigate = useNavigate();
+  const [brightness, setBrightness] = useState(1);
 
   useEffect(() => {
     getUserCamera();
@@ -101,7 +102,7 @@ function HiddenTakePicturePage({ studentID, selectedFrameSrc }) {
       <video
         className="container p-8 pb-10 m-0 -scale-x-100"
         ref={videoRef}
-        style={{ transform: "scaleX(-1)" }}
+        style={{ filter: `brightness(${brightness})`, transform: "scaleX(-1)" }}
       ></video>
 
       <div className="flex h-[90vh] w-90 m-0 pt-14 justify-start">

@@ -21,7 +21,7 @@ function LandingPage() {
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen gap-6">
       <h1 className="font-pretendard">프레임 테마 선택</h1>
-      <div className="flex w-1/2 gap-4 h-3/4">
+      <div className="flex max-w-[768px] gap-4 h-3/4">
         <div
           onClick={handleDOITBasicClick}
           className="flex flex-col w-full h-full"

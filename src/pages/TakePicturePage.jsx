@@ -22,6 +22,8 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   let navigate = useNavigate();
+  const [brightness, setBrightness] = useState(1);
+  const [exposure, setExposure] = useState(1);
 
   useEffect(() => {
     getUserCamera();
@@ -54,6 +56,8 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
     photo.height = height;
 
     const ctx = photo.getContext("2d");
+
+    ctx.filter = `brightness(${brightness}) contrast(${exposure})`;
     ctx.drawImage(video, 0, 0, photo.width, photo.height);
   };
 
@@ -96,14 +100,14 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
         <video
             className="w-full"
             ref={videoRef}
-            style={{ transform: "scaleX(-1)" }}
+            style={{ filter: `brightness(${brightness}) contrast(${exposure})`,transform: "scaleX(-1)" }}
         ></video>
         <div className="flex gap-4 p-3.5">
           <button
               onClick={() => takePicture(0)}
               className="container btn btn-primary btn-lg"
           >
-1번 사진찍기
+            1번 사진찍기
           </button>
           <button
               onClick={() => takePicture(1)}
@@ -135,6 +139,28 @@ function TakePicturePage({ studentID, selectedFrameSrc }) {
             완료
           </button>
         </div>
+          <div className="mt-6 flex flex-col items-center">
+              <label className="text-lg font-medium">밝기 조절: {brightness}</label>
+              <input
+                  type="range"
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                  value={brightness}
+                  onChange={(e) => setBrightness(e.target.value)}
+                  className="w-64 mt-2"
+              />
+              <label className="text-lg font-medium">조도 조절: {brightness}</label>
+              <input
+                  type="range"
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                  value={exposure}
+                  onChange={(e) => setExposure(e.target.value)}
+                  className="w-64 mt-2"
+              />
+          </div>
       </div>
         <div className="flex w-[40%] max-h-full">
             <div className="flex fixed right-0 w-auto h-full aspect-[218.828/654] justify-end" id="capture-div">
